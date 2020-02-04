@@ -1,0 +1,203 @@
+Session 3 Notes:
+reference monitor: always invoked, not-forgable, always verifiable
+
+Access Control List:
+each object has an access control list of each subject where each subject has its access rights listed to that object.
+
+No Capability questions on the quiz
+
+CryptoSystems - DES:
+Created by IBM for US Gov in the 70s. 
+-For national bureau of standards (no called NIST)
+
+-Substitiution/Transposition are used
+64bit, 16 Cycles of Substitiution/Transposition 56-bit strength key (8 bit checks digits)
+
+DES Algorithm:
+ 
+1. replace blocks of bits(Substitiution) aabc -> bbcd
+2. shuffle step(Permutation)
+3. mingling in bits from the key (Key Transformation)
+
+Process is table-driven and repetitive
+
+suitable for implementation on single-purpose chips
+
+DES key strength is not adequate because all the possible keys can be quickly brute-forced. 
+
+2DES:
+2 Encrpytion eyes E(k2, E(k1, M))
+
+2DES only adds the workfactor of having a 57bit. Only adds a small amount of work for an attacker. 
+
+3DES:
+E(k3, E(k2, E(k1, M)))
+Has the work factor of 112-bit key.
+2 key 3DES:
+E(k1, D(k2, E(k1, M)))
+Has the work factor of 80-bit key.
+
+AES:
+Advanced Encrption standards
+Symmetric key algorithm
+fast algorith, easily implemented on simple processors 
+has a strong mathematic foundation (large key space)
+
+AES Operation:
+1. Substitiution 
+2. Transposition (abab -> bcbc)
+3. Shift
+4. XOR
+5. Addition
+
+Cycles or rounds associated with key strength
+# of Cycles -> key-length (bits)
+          1 -> 128
+         12 -> 192
+         14 -> 256
+
+Each Cycle:
+Step 1. Byte Substitiution
+Step 2. Shift Row
+Step 3. Mix Col
+Step 4. Add Round Key
+
+Strength figures apply only if implemented is robust (have to be able generate strong random keys, dont reuse or non-randomly generate keys)
+Approved by DOD
+
+
+Encrption Primitives: Substitiution, shift, bit mixing()
+Cryptographic Primitives: Confusion/Diffusion
+
+Public Key Cryptography
+Diffe/Helman Algorithm
+Asymmetric Key:
+Public/Private Key
+
+One key is mathematicly generated from the other key RSA use exponentiation to generate public/private 
+
+
+Symmetric keys:
+each pair of users needs a seperate key
+n users: n(n-1)/2 keys
+-Each user must remember the key for every other users
+-maintaining keys whenever a user wants to generate a new key, keeping keys safe.
+
+Asymmetric Encrption System:
+Each user has two keys:
+Public/Private
+
+One key undoes what the other key does. Figuring out one key from the other is impossible. 
+P = D(Kpriv, E(Kpub, P))
+
+RSA Algorithm:
+CVE-2017-15361 (A vulnerability found with an implementation of RSA)
+mishandled key-pair generation 
+made it possible to compute value of private key from public 
+
+https://blog.cloudflare.com/a-relatively-easy-to-understand-primer-on-elliptic-curve-cryptography/
+
+
+Stopping man in the middle from capturing shared key.
+
+User A and User B
+
+E(kpub-b, E(priv-a, Ksym))
+
+Seal (authenticity) - user A encrypts with its private key,
+then B decrypts with A's public key so only A could have sent it.
+Lock (confidentiality) - encrypts with B's public key so only B can decrypt with public key. 
+
+Asymmetric algorithms are slow,
+they are often used for digital signatures and to exchange symmetic keys for faster communication.
+
+Error Detecting Codes:
+Helps to solve problem of: tansmission errors. 
+
+prevents non-malicious (errors) and malicous (injections)
+
+Parity bit:
+add an extra bit to data bits. Sum of data bits should be Even/Odd. 
+If sum is even extra bit is 0 if sum is odd even bit is 1. if sum is not even when 0 you know the data changed.
+opposite if using odd parity bit
+
+Parity bit issuse:
+50% detection rate. Change might be even or odd. Can be improved by adding more parity bits
+Each time we add parity bits we increase the size of data blocks
+
+Two applications:
+error detection Codes
+Cyclic-redundanc check: detects error in storage devices
+
+Hash Codes:
+One way function
+
+Cryptographic checksum:
+Hash(Plaintext) = unique hash
+
+Also called a Digest Function:
+uses a cryptographic key to encrypt checksum, so bad actor can't change the checksum if they don't know the key. 
+
+If they can't get the checksum value then they can't alter the message without alerting the actual recipient.
+
+SHA is a hashing algorithm
+
+Checksum is used to detect modification (integrity)
+Strong Cryptographic algorithms - used for sealing values like key (Authenticity)
+
+Combined they create a Digital Signature 
+
+Digital Signature:
+-Pertains to that file only
+-Can't be forged
+-Demonstrates Authenticity
+-Remains valid indefinietly. 
+
+Uses Asymmetric cryptography (Public Key)
+
+Useful for exchanging cryptographic keys between two users with no basis of trust. 
+
+
+Digit Signature Components:
+Tangible object
+Confirms authenticity
+thrid party can be called to judge authenticity
+not alterable 
+once created it cant be reforged
+
+Authentic/Unforgable
+
+Non-repudiation:
+have to be able prove someone sent a message
+Authenticity:
+receiver wants to know it came from sender
+(Certificate used to bind user identity to public key)
+
+Two piece of Digital Signature:
+- public key cryptography
+- secure message digest 
+
+Address everything exception authenticity, we need Certifficates 
+And certificate infrustrucure 
+
+E(M, Ka) - public key encryption for user a
+D(M, Ka) - private key encryption for user aabc
+E is the privacy transformation (only user a can decrypt it)
+D is the authenticity transformation (only user a can produce it)
+
+Technical Pieces:
+Hash function 
+Public key Cryptography 
+Protocol 
+Non technical piece:
+We need to trust public key (Certificate is used, certificate authority manages it)
+
+Create a file
+encrypt the message for authenticity
+use a secure hash code to compute message digest
+apply signatures private encryption key to encrypt message igest
+add an indication of wht hte signer was 
+encrypt the hash value of the senders private key
+encrypt the message for confidentiality
+
+Session 3:
