@@ -195,9 +195,30 @@ We need to trust public key (Certificate is used, certificate authority manages 
 Create a file
 encrypt the message for authenticity
 use a secure hash code to compute message digest
-apply signatures private encryption key to encrypt message igest
+apply signatures private encryption key to encrypt message digest
 add an indication of wht hte signer was 
 encrypt the hash value of the senders private key
 encrypt the message for confidentiality
 
 Session 3:
+
+vulnerability associated with software
+how software can be used in attacks
+common controls for preventing/mitigating these vulnerabilities
+
+Integrity problems lead to harmful output or action
+off opportunities for exploitation by a malicious user
+
+Result from a program flaw
+Leads to a Failure
+
+Question: how is incorrect operation of a program an integrity issuse
+
+we need to trust software is accurate and consistent 
+
+flaws could be exploited 
+
+can be manipulated to change program's behaviour 
+can use it to gain access to another system (pivot)
+
+Buffer Overflow
