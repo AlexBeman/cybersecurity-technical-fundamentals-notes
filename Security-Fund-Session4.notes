@@ -1,0 +1,287 @@
+Harm from a Buffer Overflow:
+What kind of harm can an adversary do with a buffer overflow?
+
+Buffer is an area of memory
+Memory is finite
+some programming languages must declare the buffers max size
+
+replace code in the system space
+    1. bad actor replaces a few instruction to return their own procedure that is in memory
+    2. escalated privileges
+    3. overflows in system code space, and adversary inserts their own malicious code. 
+
+Stack Overflow
+    1. overflow the stack to change the stack pointer, to change behavior of calling procedure. 
+
+Writing into memory outside array sample[9]; sample [10] = 'B'
+
+Multiple things could happen:
+B is written into User's existing variables or unused space
+B is written into user's program area; if it overwrites an un-executed instruction then the program crashes
+B is written into system data
+B is written into system memory which could cause faulty data or instruction. 
+
+There is potential for privilege escalation. A user shouldn't be able to interact with privileged system data without the OS permission
+
+Stack:
+top of memory, grows down
+
+Heap:
+bottom of memory, grows up
+
+They grow toward each other, and the OS prevents them from colliding. User can write a bunch of data to the heap to cause them to collide 
+
+Stack Smashing:
+Overwrite the program counter (stored in the stack)
+-subroutine exists to a new address
+Overwrite code in low memory (what?)
+Overwrite program counter and data
+-point the program counter to executable code you load into memory. 
+
+Data-Driven Attack
+-Directed by specially chosen data the attacker feeds a program as input 
+Buffer Overflow attack are also usually multistep:
+overruns memory space allocated to something escalated
+uses overrun to execute instructions to achieve the next step of their attack. 
+
+Controls for Buffer Overflow:
+- Check length before writing to memory
+- Confirm array subscripts are within limits
+- Double check boundary condition code
+- Monitor inputs, accept only as many characters as can be handled 
+- Use string utilities that transfer only a bounded amount of data
+- Check procedures that may overrun their space
+- limit program privileges (if a program is overtaken maliciously the adversary doesn't get elevated permissions)
+
+Language Features:
+Generate code to check bounds of before storing data
+- java/.net/perl/python
+Some allow unlimited program access
+- c/c++
+- machine language(assembly)
+
+Code Analyzers:
+Analyze source code - detect unsafe condition
+
+Separation:
+-Enforce Containment, separate sensitive areas from running code & its buffers and data spaces
+-To a certain degree, hardware can separate code from data & OS 
+
+
+Each procedure call produces a new stack frame
+(data group of params, return address, stack pointer)
+
+Wrap each stack frame in a protective layer called a Canary
+-If the canary is overwritten then we know the stack has been incorrectly modified, and to throw an error.
+
+ideally an attacker doesn't know where canary is in the stack.
+
+Incomplete Mediation:
+When app accepts invalid data from the user (trust user)
+
+Mediation:
+Checking the data provided by the user.
+
+Controls for Incomplete Mediation:
+-don't assume user will give good input
+-validate all input
+-User's can't modify input parameters. 
+-complete mediation, before program executes check that they are valid. 
+
+Complete mediation:
+-Reference Monitor
+ -Always Invoked
+ -Can't be by passed
+ -high confidence of correctness 
+
+Time of Check to Time of Use:
+flaw is a result of synchronizing the order in which the CPU process instructions
+- instructions are not processed sequentially (Increases CPU efficiency and allows concurrent processing)
+
+Incomplete mediation of access control:
+While the Access control mediator is looking up a programs access to a file, an attacker can change the action they want to execute on the file.
+
+I have read and not write access to fileA
+I request a read to fileA
+Access control mediator checks if my access to fileA
+I change my request to write to fileA
+Access control mediator approves my initial request that has now changed to a write. 
+
+Checking on action then doing another is ineffective access control:
+- Leads to confidentiality failures and integrity failures
+
+Controls:
+Critical params are not exposed during any loss of control (Can't change what type of action I wanted while access is being looked up)
+
+Access Control software must own the request during validation 
+or
+Validation routing initially copies data from the User's space to routine space. Doesn't reference a request the User can edit. 
+
+Controls for Reference Monitor:
+Two aspects of the access control decision are outside the domain of the program whose access is being controlled.
+
+-Data on which the access control decision is based
+-The result of decision
+
+Undocumented Access Point (backdoors):
+Often are created during during development & testing
+
+turns on special debug settings, allows testing of program flow, interrogate variable values
+
+Sometimes forgotten
+
+Backdoor Problems:
+These are obscure, often undocumented (Security through obscurity)
+-Undocumented user account, an attacker can create a user account to gain persistence 
+
+Undocumented Access point controls:
+Rigorous code reviews.
+-not labeled, sometimes added after code reviews. 
+
+Off by One Error:
+-Loop iterating outside the space of the object being looped over. 
+-Causes system crashes (null pointer)
+Control:
+gitgud
+
+Unterminated null-terminated string 
+
+
+Parameter Length, Type, Number:
+Invalid parameter type/length can cause buffer overlow issues
+
+Race Conditions:
+Two devices submit competing requests to OS for a given space in memory at the same time.
+-integrity issue
+
+Malicious Code (Malware):
+program or program parts that are planted by an agent with malicious intent. 
+
+Malware is not:
+Unintentional errors/coincidences 
+
+Virus:
+a program that can replicate itself and pass on malicious code to other non-malicious programs by modifying them.
+Transient Virus:
+Attach to other programs, malicious, intended to spread
+Life span depends on life of host.
+virus runs when the host program executes and terminates when the attached program ends.
+
+Resident Virus:
+Locates itself in memory
+Remains active or can be activated by another program.
+
+Worm:
+A program that spreads copies of itself through a network
+Viruses require host files to copy itself, worms are stand alone programs
+
+Worms often seek out machines on the internet
+
+Crawlers:
+Worms that gather information about devices connected to a network. 
+
+Bot:
+Continuously scans web content and reports back to controller any new content found. 
+
+Trojan Horse:
+program with benign effect, but also a second malicious effect. 
+
+Rabbit:
+replicates itself without limit (exhaust system resources)
+
+Logic Bomb:
+triggers an action on some predetermined condition 
+
+Time Bomb:
+triggers an action based on pre-determined time
+
+Dropper:
+transfers agent code that delivers other code
+
+RAT:
+remote access Trojan
+
+Spyware:
+intercepts and covertly communicates on ouser activity
+
+Zombie:
+code or under control of remote program
+
+Rootkit:
+installed in the most priviledged section of the OS during installation(hard to detect)
+
+Trapdoor/Backdoor:
+allows unauthorized access, bybasses normal access control.
+
+Toolkit/Tool:
+Programs that contain set of tests for vulnerabilities 
+
+Zero Day Attack:
+Active malware that is exploiting a vulnerability for which the product manufacture has no fix. 
+'zero days since the exploit has been fixed'
+
+as long as users receive & implement control before someone exploits vulnerability no harm occurs.
+
+Malware Technical Details
+
+Attack (Infection) Vectors Include:
+- OS
+- Document Applications (Word.exe)
+- Media Players
+- Document Rendering Engines (Adobe)
+- Photo-Editing
+- Transmission Media on networks, disks, USB
+
+
+Malware Harm:
+Malware operates under User's authority
+-Nondestructive 
+    funny message (Trolls)
+-Destructive 
+    Corrupting files
+    Deleting files
+    damaging software
+    motive to harm 
+-Criminal
+    take over a recipient's computer
+    install code to allow remote access
+    Cause a target computer to perform actions on the agent's computer or forward sensitive data
+    Includes collecting credentials to banking sites
+
+Examples of direct harm:
+- hiding cursor/displaying images or text 
+
+Indirect Harm:
+- harm reputation (web site is used to launch an attack)
+- harm to critical functions of web site
+- harm to user's system 
+
+Malware Persistence:
+    add persistence to malware
+    write malware so it resists attempts to eradicate it. 
+    conceal heir infection
+        -hide file in lower level directory
+        -attach malware to critical system file
+        -replace a non-critical system file
+        -hide copies of malware in more than one location 
+        -hide copies on more than one system
+        -modifiy system registry so malware is always executed or malware detection is disabled. 
+
+Multipartite virus:
+eradication means finding and deleting ever piece 
+install themselves in several pieces 
+in several locations
+can regrow itself if partially deleted
+
+Harm to the world:
+Morris worm (1988) infected 3000 computers (half computers at the time)
+
+"I love you" worm passed through email 100,000
+
+code red: 3 million hosts
+
+Conficker worm strains - control a network of 1.5 million devices
+
+
+
+Quiz 1: Covers chapter 1 -> chapter 3 technical details of malware. 
