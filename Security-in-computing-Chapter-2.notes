@@ -1,0 +1,293 @@
+Notes:
+
+Identification: asserting who a (person/subject) is.
+Authentication: proving an asserted identity.
+
+
+Authentication relies on three qualities to confirm a user's identity:
+Something they know: (Password, secret handshake, mothers maiden name)
+Something they are: Biometrics: (fingerprints, retina, face)
+Something they have: keys, identity badges
+
+Two or more can be combined
+
+Passwords:
+Use: Supplying a password for each access to an object can be inconvenient and time consuming (have to log in every time)
+Disclosure: If a user ever tells someone a password, the object is not accessible to anyone.
+Revocation: To revoke a user's access right to an object, someone must change the password
+Loss: if a user loses a password the old password needs to be replaced, can't be retrieved
+
+12 Steps to figure out a password:
+1. no password
+2. same as userid
+3. is derived from username
+4. on a common word list (password, secret, private)
+5. contained in a short college dictionary
+6. contained in a complete english dictionary
+•	contained	in	a	short	college	dictionary	with	capitalizations	(PaSsWorD)	or substitutions	(digit	0	for	letter	O,	and	so	forth)
+•	contained	in	a	complete	English	dictionary	with	capitalizations	or	substitutions
+•	contained	in	common	non-English	dictionaries	with	capitalization	or substitutions
+•	obtained	by	brute	force,	trying	all	possible	combinations	of	alphabetic characters
+•	obtained	by	brute	force,	trying	all	possible	combinations	from	the	full character	set
+
+Most people use weak passwords
+
+Dictionary Attack:
+COPS[FAR90], Crack[MUF92], SATAN[FAR95] utilities allow admin to scan a system for weak passwords.
+Using dictionaries or lists of known passwords to guess a password
+
+Operating Systems:
+Conceal passwords in password table via hashing
+Rainbow table:
+precomputed list of popular password values(hashed)- attackers can intercept common passwords, hash them into rainbow tables and then guess what hash an operating system has for any given password
+-If a salt is not used to hash the password, if two users have the same password there can be a collision.
+
+Salt:
+extra datafield that is different for each user that is joined to the password before hashing.
+
+Exhaustive attack/Bruteforce:
+attacker uses all possible passwords.
+
+-The search ends when a password is found so if passwords are evenly distributed we should only need to search half the search space
+-However passwords are an uneven distribution which an attacker can use as an advantage. So they may try short combinations of characters first.
+
+Good Passwords:
+-Use non [a-z] characters
+-Long password
+-Avoid actual names or words
+-Have to be able to remember
+-use variants of a master pw for multiple pw
+-change pw regularly
+-dont write pw down
+-dont tell anyone your pw
+
+Security Questions:
+-problem with security question is often the question can be determined by researching a subject
+
+Something you are (Biometrics):
+-Users might find them intrusive
+-(costly/maybe)
+-Biometric readers can become a single point of failure(no other option, you don't have multiple fingers like you can have multiple key cards?)
+-Biometrics rely and sampling and thresholds of how close you are to the sample, if you vary to much from the initial sample you might not meet the threshhold. False readings can occur cause false negative and false positives
+
+Sensitivity:
+how well a test discriminates between cases with an without a certain condition
+Accuracy:
+measures the degree to which a test or screen correctly flags the condition or situation
+
+Sensitivity vs specificity
+
+Sensitivity = -specificity (Sensitivity and specificity are negatively correlated)
+
+If we are less strict with what is an acceptable answer to a test/screen (smith = smeth = smitt) then we are more sensitive to the subject's authentication request, but we become less specific about what is a possible answer (not only allow smith)
+
+Receiver operating characterics (ROC) curve:
+-Gives the trade off between false negative and false positive rates. If we reduce the amount of false positives we will increase the amount of false negatives.
+False Negative goes down if we are more sensitive to user log in attempts, but False positives will go up because we are less specific with our authentication request
+
+Biometric	authentication	means	a	subject	matches	a	template	closely enough.	“Close”	is	a	system	parameter	that	can	be	tuned.
+
+Using Cookies for authentication:
+-Cookie: pair of data items sent to the web browser by the visited website. (key, value) keeps state of the session b/w browser and server.
+cookies can store identifier for user for authentication so the user no longer needs to use password (cookies expire)
+cookies are not typically encrypted so someone listening can steal and re-use cookie to impersonate someone.
+cookies were not designed for protection and sites can't confirm integrity of a cookie
+
+Something you have(tokens):
+a physical object you possess to authenticate yourself(key, swipe card)
+-can be lost or duplicated
+
+Active and Passive Tokens:
+
+Passive Tokens: passive tokens do nothing to interact with the environment. A photo or a key can be a passive token to authenticate.
+Active Tokens: interacts with surroundings to validate. Magentic strips, rfid- make some kind of connection to authentication device that actives the token.
+
+Static Tokens:
+token that remains fixed (Keys, identity cards, Magentic strips) tokens that don't change you login. Mostly used for onsite authentication.
+-Vulnerable to skimming: devices that copy authentication data and replay the authentication day to gain false authentication.  ATMs Vulnerable
+
+Dynamic Token:
+Value changes over time. pass number/pin changes over a time interval. Generated programmatically
+
+Federated Identity Management:
+Keep track of one user profile, separate systems share access to authentication database. Authentication is preformed in one place and systems check with single system to determine if user is authenticated.
+
+Single-Sign On:
+User is re-authenticated in every system instead of maintaining the userprofile in one location.
+
+Access Control:
+Subject is permitted to access an object in a particular mode, and only such authorized access is allowed.
+
+Access Policies:
+
+Checky every access: check every access by a user to an object (if a user's access is revoked they shouldnt be allowed to maintain their previous level of access)
+Enforce least privledge: users should only be able to access objects in the most limited mode possible to fufill their job requirements.
+Verify acceptable usage: check the activity a user is performing on an object.
+
+Tracking:
+
+Granularity: the specificity of access control. Access to a file system gives access to all files and all bits. Access to a file doesnt grant access to all files in file system.
+
+Audit log should track all user interactions with objects.
+
+Limit privilege to reduce exposure of objects to reduce risk.
+
+Reference monitor: construct that ensures access control.
+-always invoked; validates every access attempt
+-immune from tampering
+-assuredly correctly
+
+a framework for access control systems
+
+Access Control Directory:
+-Each user has a file directory, which lists all the files that user can access. Each user must have an access level for every single object.
+-because each user has to maitain a list of all files they can access, the list of user lists can become large and expensive to search to determine a user's access for every file.
+-revocation of access can have a cascading affect where A can revoke access for multiple users, so operating system must search level of access for every other user when access is changed.
+-issue if two files of the same name, cant have colisions in access directory, so have to keep track of psudo names
+
+Access Control Matrix:
+-Table where each row is a user, and every col is an object in the system. Creates triplets of access for every object. Most objects aren't used by a user so lots of unused triplets. Inefficient space, giant matrix is more expsnive to search for access.
+
+Access Control List:
+-Each object has an access list for the list of subjects. So no empty matrix items. (Based on list of objects, every  objec maitains of list of all user's privilege). More expensive to revoke access because have to search all users in objects control list.
+
+Privilege List:
+-Each subject has a list of what objects/access modes they have. every subjects has a list of objects they can access. Easier to revoke rights to objects because if a user is removed from system, their entry in the table is simply removed.
+
+Capability:
+an unforgeable token that gives the	possessor certain	rights	to	an	object (R/W/O)
+
+As a process executes it operates in a Domain:
+Domain = collection of objects to which the process has access.
+
+Procedure Oriented Access Control:
+-Limit access to objects through an interface of procedures. Limit what procedures can be run by a subject on an object.
+
+Role-Based Access Control:
+Associate privilege with groups, limit access modes to objects to certain groups. Users are added to groups with level of access needed.
+
+Encryption: process of encoding a message so that its meaning is not obvious
+Decryption: reverse process transforming an encrypted message back into plain text
+
+Symmetric Encryption (Private/Single Key):
+Senders and receiver have the same key to encrypt and decrypt messages.
+if the private key is never disclosed the encrpytion provides authenticity because only the two users have the key.
+-Negative: Requires a secure key distribution scheme to prevent someone from capturing private key.
+-Negative: every pair of users need their own unique key so required n(n-1)/2 keys to manage (expensive and dangerous) A-B key A-C key B-C Key 3(2)/2 = 3 keys for 3 people.
+-Negative: Key Management requires storing/safeguaring/activating and replacing keys.
+Asymmetric or Public Key Encryption:
+Users have a public key that encrypts a message, and only their secret private key and decrypt it. Sender uses receivers public key to encrypt the message, so only the receiver can decrypt with private key. No key transfer required.
+-Positive: key management is much simpler because public key is available to everyone.
+-Positive: if private key is lost only have to be updated for the individual that lost their private key.
+Keyless Cipher:
+no key required for encryption.
+
+Workfactor:
+an encryption algorithm is called breakable when given enough time and data an analyst can determine the algorithm.  (can be impractical to break if takes long time/money = workfactor)
+Difficulty of break algorithm is workfactor.
+
+Stream Cypher:
+Bits are encrypted bit by bit
+-Positive: Fast
+-Positive: Low error propogation: Only one bit is affected by error
+-Negative: low diffusion, each unique symbol might be encrypted the same way making it easier to crack cipher text.
+-Negative: easier to have malicious insertions. if encryption is broken in the past it is easier to insert matching different encrypted text into message.
+
+Block Cypher:
+Bits are encrypted in blocks (groups of bits)
+-Positive: high diffusion
+-Positive: Immunity to symbol insertion: have to insert full blocks
+-Negative: slow/larger cipher text because have to add padding bits so all blocks same size
+-Negative: error propogation because future all characters in block are used for encryption so if one character is wrong is invalidates the entire block
+
+DES: Data encryption standard:
+-old IBM standard made the US government to create an encryption framework for general public.
+-64 bit plain text blocks. 64 bit key, but limited to 56 bit number because 8 bits are used to check if digits are correct. 56 bit key strength. DES uses 16 iteractions of substitutions/shuffling(permutation)/transformation
+-56 bits is a really weak key so they made Double/Triple DES for longer keys.
+Double DES: runs DES on plain text twice, only increase key strength to 57 bits (lots of work for no advantage)
+
+Triple DES: Encrypt with 2 or 3 different keys.
+3 key increased key strength to 112-bits (better but really expensive) Encrypt with key 1 then encrypt(or decrypt) with key 2 then encrypt with key 1 (E-D-E)
+2 key increases key strength to 80 bits (cheaper considered high enough work factor) Encrpyt with key 1, then key 2 then key 3. (E-E-E)
+
+AES: Advanced Encryption Standard:
+Public competition by NIST selected Rijndael as new encryption standard.
+-Fast algorithm that can be be simply implemented.
+10 cycles: 128 bit key
+12: 192
+14: 256
+
+Public Key Cryptography:
+-Simpler key management in Symmetric key requires n(n-1)/2 keys for each individual in system. In public key only 2 keys are required for each user in system.
+-Don't need a mechanism to transfer key between two individuals.
+-Private key is generated from given public key. Private key can be re-generated at any time if original private key is lost.
+RSA Algorithm:
+-256 bit keys is min.
+-Encryption is done by exponentiation. raising each plaintext block to a power that power is the key . Exponentiation is expensive as the key grows larger. RSA is really slow.
+-RSA is often used to exchange secret symmetric keys so that a faster encryption algorithm can be used to encrypt message.
+
+Man in the Middle Attack:
+Subjects A, B and C(attacker)
+1. C intercept key exchange request from A -> B
+2. C gives A its public key to encrypt secret symmetric key.
+3. C sends  message to B with its public key and generated symmetric key.
+4. C decrypts message from A then forwards to B with C->B symmetric key.
+
+Can be stopped by only sending have the symmetric key at a time.
+After request for key exchange
+1. A sends half the key to B encrypted with B's public key.
+2. B responds to A by encrypting a random number with B's private key and sends half the bits to A.
+3. A sends other half of encrypted key to B with B's public key.
+4. B can then send the other half the encrpyted numbers bits to A with B's private key.
+5. A puts together the two halves of B's secret number encrypts it the newly shared symmetric key and sends that number back to B.
+6. B decrypts the secret number and if it matches the two halves sent to A then can validate the key wasn't intercepted.
+
+Nonce:
+The random meaningless number generated by B and sent to A in pieces.
+
+Authenticity:
+A -> B message:
+A E(k(public B), E(k(private A), K))
+
+A encrypts the key with it's private key (Only A could have encrypted this message)
+A then encrypt that cipher text with B's public key (only B can decrypt the cipher text)
+
+When B receives the key exchange request only B can decrypt the cipher text (Authenticity for B) and then it uses A's public key to get the plain-text key (Authenticity for A)
+
+Error Detecting Codes:
+Algorithm that determines if a message has an error or was changed during transmission. Struggle with collisions, two inputs create the same output. Can't be predicted, but would cause error to not be caught if two of the same messages generated the same hash/char count etc.
+
+Parity Check:
+Simple error detection code. extra bit, fingerprint, is added to data bits. Even parity: Parity bit is 1 or 0 so that the sum of all data bits are even. If the data and bits sum to an odd we know there was modification.
+
+Hardware Storage Parity:
+Cyclic Redundancy
+error correcting codes can detect multiple-bit errors.
+
+Hash Codes:
+One way algorithm that converts message into a hash or checksum or message digest of files. Only one plain text should be able to generate to a hash. Send hash code with message. If message doesnt hash to hash code you know the original message changed.
+
+Cryptographic checksum:
+Checksum is encrypted when message is sent to an attacker can't set the hash-code to match the intercepted message.
+
+SHA(Secure hashing algorithm):
+-algorithm to compute checksum
+
+Digital Signature:
+-most powerful technique to demonstrate authenticity.
+-public key Cryptography
+-Gives non-repudiation/authenticity
+-must be unforgeable
+-must be authentic
+-not alterable/not reusable
+-Public key encryption/hash functions gives us digital signatures
+-Private key encrpytion gives you authenticity
+
+Certificates:
+Public key and user's identity bound together. Which is signed by a certificate authority.
+Certificate Authority:
+Promulgates which user's identity is associated with a public key.
+
+Message Digest:
+ hash of message to check for errors/modifications
+
