@@ -1,0 +1,194 @@
+Browser Attacks:
+
+Man-in-the-browser: (Trojan/Keylogger)
+Malicious code has infected a browser. Code inserted into the browser can be read, copied and redistibuted. (reuse credentials/financial accounts)
+Captures data before encrypted by SSL.
+Doesn't alter website just browser is infected.
+
+SilentBanker (Trojan horse):
+displayed itself as a browser plugin, but for specific banking sites logged and set any credentials/key strokes.
+Captured data before browser encrypted it for transport. 
+
+Keystroke Logger:
+Hardware/software that records all keystrokes entered. (small object like usb)
+
+Page-in-the-middle:
+User is redirected to another page from a website. 
+Present the user with a fake login page to capture creds then forward those creds to downstream site. 
+
+Computer-Computer Auth:
+Have - token (can be forged or spoofed)
+Are - MAC Addres/IP Address (can be forged or spoofed)
+Know - shared secret (list of passwords)
+
+To succesfully authenticate (Successful Auth and Identification)
+
+Program Download Subsitution:
+attacker presents a page with a desirable and seemingly innnocous program for the user to download, infect that download with malware.
+Defeats many controls because the user activley invites the malware to run on their machine.
+
+User-in-the-middle:
+use humans to break captcha controls, but having them fill out captchas as a condition to reach your site. 
+
+Authentication and Trust
+
+Shared Secret:
+credit card extra charcs/mothers maiden name/security question
+
+One-Time-Password:
+Each side has a list of one use passwords that are deleted after use
+
+Out-of-Band Communication:
+Mulit-factor, don't send both pieces of information accross same channel
+
+Continous Authentication (care when setting up and guarding endpoints)
+
+False Misleading Content:
+
+Defaced Website:
+replaces or modifies the content of a legitament Website
+
+Fake Website:
+make a fake site that spoofs the url of a real site to capture user creds/information
+
+Fake Code:
+user downloads your seemingly valid file, but it actually contains malware.
+Common on mobile - text download links to malicous malware. 
+
+Controls for Misleading Content:
+
+Integrity Checksums:use to detect if the website content has been altered after its creation.
+
+Signed Code or Data:
+User can not run downloaded code until they inspect the seal, and validate the source was authentic. 
+Threat of malicously signed code is real.
+
+Malicious Web Content:
+
+Substitute Content on a Real Web Site:
+Replace resources on a website with malicous content. 
+
+Web Bug:
+Also called a clear GIF, 1x1 GIF, or tracking bug, is a tiny image, as small as
+1 pixel by 1 pixel 
+
+imbedded in websites/advertisements to track cookies/user content
+
+hijacks how companies want to monitor user's website interactions to gather information about users
+
+Clickjacking:
+Overlay dangerous button ontop of button that does what the user wants. 
+(Put download malware link ontop of play button/close button of web player)
+
+Possible through frames and Iframes(can be layered ontop or underneath a web pages/transparent)
+
+Drive-By-Download:
+clicking links indirectly downloads file while taking use to thier page. Downloads files without request.
+
+Protecting Against Malicious Web Pages:
+access control accomplishes separation, keeping two classes of things seperate.
+
+Attacks Against Browser:
+Goal- obtain sensitive data, download malware, or to entice user to do something. 
+
+Controls for protecting website:
+
+Server Side:
+Make sure content isn't altered by hashing static content of website. 
+Scan website to make sure static content doesn't get altered. 
+
+Client Side:
+Inspect signature on downloaded software (third party to validate seal)
+
+Access Controls:
+Technical - configure browser so downloads are not automatic
+Admin and Tech - institute least privledge enviornment, browser has as little access to computer as possible.
+Admin - Train users to not click bad links.
+
+Obtaining user Website Data:
+-Extract Data
+Method code within data
+    -XSS (cross site scripting) 
+XSS Threats:
+Spam
+Identity Theft
+    ssn/bank#/DOB/mother's maiden name
+
+Persistent XSS
+    Browser sends XSS in URL to server
+    Server interprets the script and saves it on the sever
+    Server returns XSS to other clients
+
+SQL Injection:
+User injects a string into a url/form that is a sql statement.
+Injecting sql can give command execution to user, and elevate privledges
+
+Prevent escalation
+-no editors (no text editors to allow attacker to exectute code)
+-no xterm (no command shell access)
+-no telnet (allow remote access)
+
+../ Dot-Dot-Slash attack:
+Allows users to move up directory tree to escalate their access. Prevent users from traveling up directory tree
+
+If requesting a file don't allow users to travel around directory when pulling a file.
+
+Server Side Include:
+Many pages run web commands automatically, if those commands are put into the server the command is run automatically
+
+<!-- #exec cmd="../../telnet" --> Runs telnet 
+
+.chmod - change access permissions
+.sh - opens a command shell
+.cat - copy to file
+
+all commands you don't want use to run
+
+Preventing Data Attacks:
+-Input Pre-processing (Sanitize/scrub inputs)
+    -catch/filter dangerous strings (1=1 / drop table)
+    -constrain inputs so only certain types/lengths are allowed for inputs
+-Access on Server
+    -blocking someones abillity to return an entire list from the server
+    -control use of the wild card character in sql (*)
+-Applications on Server should fail gracefuly 
+    -don't let failure give hidden information/access
+
+Email Attacks:
+
+fake emails/spam/inacurate headers
+
+Phishing:
+    Email link that causes social engineering to make user download malware/link to login string/give up personal information
+Spear Phishing:
+    Phishing targeting individual
+Whaling:
+    Phishing towards high value target (CEO)
+Clone Phishing:
+    Legitimate email copied and altered
+Vishing:
+ Voice call for phishing
+Smishing:
+    Instant messsage phishing.
+
+
+Email headers can be spoofed
+
+
+Operating Systems:
+
+-Segment users
+-Manages Memory - prevents processes from overwritting critical memory 
+-Identifies/Authenticates users
+-Ensures fair sharing (critical resources)
+
+
+Boot Up
+-Primary Functions -> Device Drivers (Bascic I/O) BIOS
+-Process Controllers
+-File Memory Managment
+-User Interface
+
+If Malware is present at Boot Up Sequence, then malware can gain same privledges as operating systems to gain root access.
+
+OS-Supervisor (Executive)

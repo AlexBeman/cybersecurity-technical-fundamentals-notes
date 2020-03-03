@@ -1,0 +1,149 @@
+Operating System Roles:
+
+Enforces Sharing
+    making objects available to subjects
+    gurantee integrity + consisetency 
+    control Sharing
+
+Inter-Process Synchonization:
+    executing processes 
+    access control table
+
+Protecting Resources:
+Monitor data to enforce security
+OS has to protect data so it can provide enforcment 
+
+Methods
+-encryption
+-hardware control
+-isolation
+
+Guranteed Fair Service:
+-Subject needs access to objects
+-Fair Access Objects to subjects
+    uses hardware clock to synch or some kind of scheduling.
+
+Interface to Hardware:
+-clocks
+-processors
+-server
+
+
+Memory Protection:
+Read/Write/Execute control
+Methods-> Paging and Segmentation
+
+File I/O device Access Control:
+Preventing unauthorized access (subjects and objects)
+
+OS Kernal:
+Portion of operating system that executes core operating system commands.
+acts as interface between software and hardware.
+Security Kernal:
+Portion of kernal that executes security roles of operating system. 
+
+RBAC:
+Role Base Access Control
+
+Access based on Roles
+to gain access to an object a subject must be assigned a role
+Can't change access of users in RBAC 
+Their access is based on rights granted by RBAC explicitly 
+
+DAC:
+Discretionary Access Control
+    implicit access control policies
+Discretionary because the subject (owner) can transfer authenticated objects or information access to other users
+if you have access to object A and A has access to B then if you have access to A you also get B
+All access is expected to be allowed unless explicitly denied. 
+Can change other users access
+
+MAC:
+Mandatiroy Access Control
+    No Read Up 
+    No Write Down
+unless there is an explicit policy to grand a user access they are denied.
+All access is expected to be denied unless explicitly granted.
+
+Type Enforcment:
+Process runs in a domain and that actions that process can take are determined by policy
+Also uses RBAC to control access to domains. If a user is in a domain that process can interact with it.
+
+Multi-Level Security:
+Differen't levels of access are required to maintain confidentiality in the system. 
+Only users in the correct level of security clearance can view objects.
+
+SELinux:
+security enhanced linux 
+
+Security Module:
+Subject - take actions
+Object - are acted on
+Object Manager (OM) - runs the action requested by subject on object
+
+Security Kernel (SELinux kernel):
+    Security Server (SS) - determines if a subject can do the action they want to an object
+
+Secruity Policy (SP) - rules the security server uses to determine if an action is allowed
+Access Vector Cache (AVC) - caches previous decisions made by the security server (Stores past decisions) to improve perfromance
+
+Subject Requests Access 
+-> Object Manager queries if requested action is in AVC
+-> if in AVC uses that decision else go to Security Server
+-> Security Server uses security policy to determine if a requested action is valid
+-> if valid object manager executes actions else don't
+
+Security Server queries SELinux policy store to get security policies
+    Stored seperate from security kernel
+The Security Kernel is used by linux kernel before subjects can take actions on objects
+
+SELinux Aware Applications/Services:
+In SELinux to make use of Mandatory Access Control an application must be an aware application/service
+
+Trusted Computing Base (TCB):
+    Enforces security Policy
+    subset of OS
+        primitive I/O
+        basic operations
+        clocks + timings
+Process Activiation:
+(changing process 1 to 2)
+registers
+file access lists
+address pointers
+
+Execution Domain Switching:
+process in one domain
+invokes process in other domain
+
+Memory Protection
+I/O Operations
+
+Rootkit:
+Undetected assembly or collection of program code that allows constant presence in the system. 
+
+-Often are hard to detect
+-Escalate privedges
+-persistant
+-can run in non volitile memory (file system, disk, registry) or in memory (lost after reboot)
+
+Conceals existence, by hiding files it creates, hides files specified by rootkit user, hides specified network connections 
+
+Kernel Mode:
+Alters components in the kernel (hides as a device driver)
+-goal to gain unrestricted access to computer
+
+Bootkit:
+Attacks master or volume bootrecord. 
+Infects the computer during startup 
+Goal is to subvert the kernel 
+
+User-Mode Rootkit:
+replaces executable system files
+alters security subsystem 
+
+Virtual Rootkit:
+hypervisor rootkit
+
+Firmware Rootkit:
+affects routers, network cards, hard drives, BIOS

@@ -68,7 +68,8 @@ Something you are (Biometrics):
 -Users might find them intrusive
 -(costly/maybe)
 -Biometric readers can become a single point of failure(no other option, you don't have multiple fingers like you can have multiple key cards?)
--Biometrics rely and sampling and thresholds of how close you are to the sample, if you vary to much from the initial sample you might not meet the threshhold. False readings can occur cause false negative and false positives
+-Biometrics rely and sampling and thresholds of how close you are to the sample, if you vary to much from the initial sample you might not meet the threshhold. 
+False readings can occur cause false negative and false positives
 
 Sensitivity:
 how well a test discriminates between cases with an without a certain condition
@@ -149,10 +150,13 @@ Access Control Matrix:
 -Table where each row is a user, and every col is an object in the system. Creates triplets of access for every object. Most objects aren't used by a user so lots of unused triplets. Inefficient space, giant matrix is more expsnive to search for access.
 
 Access Control List:
--Each object has an access list for the list of subjects. So no empty matrix items. (Based on list of objects, every  objec maitains of list of all user's privilege). More expensive to revoke access because have to search all users in objects control list.
+-Each object has an access list for the list of subjects. So no empty matrix items. 
+(Based on list of objects, every  objec maitains of list of all user's privilege). 
+More expensive to revoke access because have to search all users in objects control list.
 
 Privilege List:
--Each subject has a list of what objects/access modes they have. every subjects has a list of objects they can access. Easier to revoke rights to objects because if a user is removed from system, their entry in the table is simply removed.
+-Each subject has a list of what objects/access modes they have. every subjects has a list of objects they can access.
+ Easier to revoke rights to objects because if a user is removed from system, their entry in the table is simply removed.
 
 Capability:
 an unforgeable token that gives the	possessor certain	rights	to	an	object (R/W/O)
